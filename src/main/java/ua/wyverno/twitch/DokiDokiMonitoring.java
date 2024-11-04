@@ -24,7 +24,7 @@ public class DokiDokiMonitoring {
     public DokiDokiMonitoring(TwitchService twitchService) {
         this.twitchService = twitchService;
         this.notifications = new ArrayList<>();
-        scheduler.scheduleAtFixedRate(this::monitoringStreams, 0, 10, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(this::monitoringStreams, 0, 5, TimeUnit.MINUTES);
     }
 
     public void addNotificationListener(Notification notification) {

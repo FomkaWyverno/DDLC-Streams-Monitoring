@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Configuration status="WARN">
+<Configuration packages="ua.wyverno.logger.appenders" status="WARN">
     <Properties>
         <Property name="COLORS_BY_LEVEL">{TRACE=#82fbff, DEBUG=fg_#e6ce81, INFO=fg_#2ee60b, WARN=fg_#f59b42 bold, ERROR=red bold}</Property>
         <Property name="LOG_PATTERN">%highlight{[%date{HH:mm:ss}] [%thread/%level] [%class{1}] - %message%exception%n}${COLORS_BY_LEVEL}</Property>
         <Property name="HOME_LOG">logs</Property>
         <Property name="NAME_LOG_FILE">latest.log</Property>
     </Properties>
-
-    <Plugins>
-        <Plugin name="QueueConsole" class="ua.wyverno.logger.appenders.QueueConsoleAppender"/>
-    </Plugins>
 
     <Appenders>
 
