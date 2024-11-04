@@ -18,7 +18,7 @@
         </QueueConsole>
 
         <RollingFile name="file_log" fileName="${HOME_LOG}/main/${NAME_LOG_FILE}"
-                     filePattern="${HOME_LOG}/main/%d{yyyy-MM-dd}-%i.log.zip"
+                     filePattern="${HOME_LOG}/%d{yyyy-MM-dd}-%i.log.zip"
                      append="true">
             <PatternLayout pattern="${LOG_PATTERN}"/>
             <Policies>
