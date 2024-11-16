@@ -13,7 +13,7 @@
             <PatternLayout disableAnsi="false" pattern="${LOG_PATTERN}"/>
         </QueueConsole>
 
-        <RollingFile name="file_log" fileName="${HOME_LOG}/main/${NAME_LOG_FILE}"
+        <RollingFile name="file_log" fileName="${HOME_LOG}/${NAME_LOG_FILE}"
                      filePattern="${HOME_LOG}/%d{yyyy-MM-dd}-%i.log.zip"
                      append="true">
             <PatternLayout pattern="${LOG_PATTERN}"/>
