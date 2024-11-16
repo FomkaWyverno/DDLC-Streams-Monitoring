@@ -23,7 +23,7 @@ public class Main {
 
         DokiDokiMonitoring monitoring = new DokiDokiMonitoring(twitchService);
 
-        DiscordBot discordBot = new DiscordBot(monitoring);
+        DiscordBot discordBot = new DiscordBot(monitoring, twitchService);
 
         monitoring.addNotificationListener(discordBot);
 

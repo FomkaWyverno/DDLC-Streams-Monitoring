@@ -11,12 +11,13 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 public class DokiDokiMonitoring {
     private static final Logger logger = LoggerFactory.getLogger(DokiDokiMonitoring.class);
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private final TwitchService twitchService;
-
+    private final ListBanStream listBanStream = ListBanStream.getInstance();
     private final List<Notification> notifications;
 
     private final AtomicBoolean isPause = new AtomicBoolean(false);
@@ -33,7 +34,11 @@ public class DokiDokiMonitoring {
 
     private void monitoringStreams() {
         if (this.isPause.get()) return;
-        List<Stream> ukrainianStreams = this.twitchService.getUkrainianStreams();
+        List<Stream> ukrainianStreams = this.twitchService
+                .getUkrainianStreams()
+                .stream()
+                .filter(stream -> this.listBanStream.contains(stream.getUserId()))
+                .collect(Collectors.toList());
         if (!ukrainianStreams.isEmpty()) {
             logger.info("Found ukrainian streams");
             this.notifications.forEach(notification -> notification.sendNotification(ukrainianStreams));

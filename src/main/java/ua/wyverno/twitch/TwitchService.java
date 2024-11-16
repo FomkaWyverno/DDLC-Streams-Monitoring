@@ -5,13 +5,11 @@ import com.github.twitch4j.TwitchClientBuilder;
 import com.github.twitch4j.helix.TwitchHelix;
 import com.github.twitch4j.helix.domain.Stream;
 import com.github.twitch4j.helix.domain.StreamList;
+import com.github.twitch4j.helix.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class TwitchService {
     private static final Logger logger = LoggerFactory.getLogger(TwitchService.class);
@@ -49,6 +47,20 @@ public class TwitchService {
         } while (paginationCursor != null); // Якщо курсор присутній продовжуємо дивитись всі етери
 
         return StreamFilter.filterUkrainianStreams(streams);
+    }
+
+    public User searchUser(String display_name) {
+        logger.trace("Search user by name: {}", display_name);
+        List<User> users = this.twitchHelix // Шукаємо юзера за логіном
+                .getUsers(null, null, Collections.singletonList(display_name.toLowerCase()))
+                .execute().getUsers();
+
+        if (users.size() > 0) { // Якщо когось знайшли відаємо першого
+            logger.trace("Found user by name: {}", display_name);
+            return users.get(0);
+        } else {
+            return null;
+        }
     }
 
     public void close() {

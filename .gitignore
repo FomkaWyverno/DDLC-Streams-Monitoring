@@ -36,3 +36,4 @@ build/
 
 config.properties
 logs/*
+banned-streams.json
