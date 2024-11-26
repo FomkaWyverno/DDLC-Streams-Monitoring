@@ -13,26 +13,30 @@ public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
-        ConfigLoader config = ConfigLoader.getInstance();
+        try {
+            ConfigLoader config = ConfigLoader.getInstance();
 
-        TwitchService twitchService = new TwitchServiceBuilder()
-                .clientID(config.getProperty("twitch-client-id"))
-                .clientSecret(config.getProperty("twitch-client-secret"))
-                .CATEGORIES_IDS(config.getProperties("ddlc-category-id", "ddlc-plus-category-id"))
-                .build();
+            TwitchService twitchService = new TwitchServiceBuilder()
+                    .clientID(config.getProperty("twitch-client-id"))
+                    .clientSecret(config.getProperty("twitch-client-secret"))
+                    .CATEGORIES_IDS(config.getProperties("ddlc-category-id", "ddlc-plus-category-id"))
+                    .build();
 
-        DokiDokiMonitoring monitoring = new DokiDokiMonitoring(twitchService);
+            DokiDokiMonitoring monitoring = new DokiDokiMonitoring(twitchService);
 
-        DiscordBot discordBot = new DiscordBot(monitoring, twitchService);
+            DiscordBot discordBot = new DiscordBot(monitoring, twitchService);
 
-        monitoring.addNotificationListener(discordBot);
+            monitoring.addNotificationListener(discordBot);
 
-        discordBot.addStopCommandHook(() -> {
-            twitchService.close();
-            monitoring.close();
-            if (QueueLoggerEvents.hasInstance()) {
-                QueueLoggerEvents.getInstance().close();
-            }
-        });
+            discordBot.addStopCommandHook(() -> {
+                twitchService.close();
+                monitoring.close();
+                if (QueueLoggerEvents.hasInstance()) {
+                    QueueLoggerEvents.getInstance().close();
+                }
+            });
+        } catch (Throwable e) {
+            logger.error(e.getMessage());
+        }
     }
 }

@@ -33,17 +33,21 @@ public class DokiDokiMonitoring {
     }
 
     private void monitoringStreams() {
-        if (this.isPause.get()) return;
-        List<Stream> ukrainianStreams = this.twitchService
-                .getUkrainianStreams()
-                .stream()
-                .filter(stream -> this.listBanStream.contains(stream.getUserId()))
-                .collect(Collectors.toList());
-        if (!ukrainianStreams.isEmpty()) {
-            logger.info("Found ukrainian streams");
-            this.notifications.forEach(notification -> notification.sendNotification(ukrainianStreams));
-        } else {
-            logger.info("Not found ukrainian streams");
+        try {
+            if (this.isPause.get()) return;
+            List<Stream> ukrainianStreams = this.twitchService
+                    .getUkrainianStreams()
+                    .stream()
+                    .filter(stream -> this.listBanStream.contains(stream.getUserId()))
+                    .collect(Collectors.toList());
+            if (!ukrainianStreams.isEmpty()) {
+                logger.info("Found ukrainian streams");
+                this.notifications.forEach(notification -> notification.sendNotification(ukrainianStreams));
+            } else {
+                logger.info("Not found ukrainian streams");
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
         }
     }
 
