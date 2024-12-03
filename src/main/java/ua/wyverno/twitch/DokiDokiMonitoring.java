@@ -38,7 +38,7 @@ public class DokiDokiMonitoring {
             List<Stream> ukrainianStreams = this.twitchService
                     .getUkrainianStreams()
                     .stream()
-                    .filter(stream -> this.listBanStream.contains(stream.getUserId()))
+                    .filter(stream -> !this.listBanStream.contains(stream.getUserId()))
                     .collect(Collectors.toList());
             if (!ukrainianStreams.isEmpty()) {
                 logger.info("Found ukrainian streams");
