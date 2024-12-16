@@ -33,6 +33,7 @@ public class DiscordBot implements Notification {
                 .addEventListeners(new PauseCommand(monitoring))
                 .addEventListeners(this.stopCommand)
                 .addEventListeners(new BanCommand(this.twitchService))
+                .addEventListeners(new BanToRebootCommand(this.twitchService))
                 .addEventListeners(new UnBanCommand(this.twitchService))
                 .enableIntents(GatewayIntent.GUILD_MEMBERS)
                 .setMemberCachePolicy(MemberCachePolicy.ONLINE)
@@ -45,6 +46,8 @@ public class DiscordBot implements Notification {
                         Commands.slash("ban", "Перестати оповіщувати про певний етер")
                                 .addOption(OptionType.STRING, "user-name", "Імя користувача на Твітчі", true),
                         Commands.slash("unban", "Відновити сповіщення про певний етер")
+                                .addOption(OptionType.STRING, "user-name", "Імя користувача на Твітчі", true),
+                        Commands.slash("ban-to-reboot", "Перестати оповіщувати про певний етер, до перезапуску бота")
                                 .addOption(OptionType.STRING, "user-name", "Імя користувача на Твітчі", true))
                 .queue();
 
