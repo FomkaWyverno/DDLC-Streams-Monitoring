@@ -55,7 +55,7 @@ public class BanToRebootCommand extends ListenerAdapter {
 
             String urlStream = "https://www.twitch.tv/"+userTwitch.getDisplayName();
             if (addedBan) {
-                event.getHook().sendMessage("Успішно додано до списку прихованих до перезапуску бота\""
+                event.getHook().sendMessage("Успішно додано до списку прихованих до перезапуску бота \""
                         + userTwitch.getDisplayName() +"\"!\n"+urlStream).queue();
                 logger.trace("Add to Reboot Discord Bot Ban Twitch Stream for user: {}\nURL: {}", userTwitch.getDisplayName(), urlStream);
             } else {
