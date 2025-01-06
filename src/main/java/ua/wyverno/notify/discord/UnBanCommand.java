@@ -61,7 +61,7 @@ public class UnBanCommand extends ListenerAdapter {
                 event.getHook().sendMessage("Успішно видалено зі списку прихованих користувача\n"+urlTwitch).queue();
                 logger.trace("Successful remove from ban list: {}", userTwitch.getDisplayName());
             } else {
-                event.getHook().sendMessage("Виникла помилка при видалені користувача зі списку прихованих!").queue();
+                event.getHook().sendMessage("Користувача не було у списку прихованих, або виникла помилка при видалені зі списку.").queue();
                 logger.trace("Fail remove user: {}, ID: {} from ban list", userTwitch.getDisplayName(), userTwitch.getId());
             }
         }

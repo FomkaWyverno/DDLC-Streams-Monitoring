@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ListBanStream {
@@ -85,9 +86,14 @@ public class ListBanStream {
     public BanStream getByID(String user_id) {
         return this.banlist.stream().filter(banStream -> banStream.getUserId().equals(user_id))
                 .findFirst()
-                .orElse(null);
+                .orElse(this.temporaryBanList.stream()
+                        .filter(banStream -> banStream.getUserId().equals(user_id))
+                        .findFirst()
+                        .orElse(null));
     }
     public boolean removeById(String user_id) {
+        logger.trace("Ban-list: {}", this.banlist);
+        logger.trace("Temporary ban-list: {}", this.temporaryBanList);
         BanStream banStream = this.getByID(user_id);
         if (banStream != null) return this.remove(banStream);
         return false;

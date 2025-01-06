@@ -43,4 +43,11 @@ public class BanStream {
         result = 31 * result + (user_name != null ? user_name.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "{\"BanStream\":{"
+                + "\"user_id\":\"" + user_id + "\", "
+                + "\"user_name\":\"" + user_name + "\"}}";
+    }
 }
